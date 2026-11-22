@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ZEUS · Control de batería</title>
+<meta name="description" content="ZEUS: registra tus recorridos y controla la batería de tu vehículo eléctrico de dos ruedas, con alertas de nivel bajo.">
+<meta name="theme-color" content="#080D19">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="preload" href="assets/fonts/sora-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/dm-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Sora';font-style:normal;font-weight:100 800;font-display:swap;src:url(assets/fonts/sora-latin-var.woff2) format('woff2');}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 1000;font-display:swap;src:url(assets/fonts/dm-sans-latin-var.woff2) format('woff2');}
+
+:root{
+  --bg:#080D19; --panel:#101A30; --panel-2:#15213B; --line:#1C2A48; --line-2:#28395D;
+  --text:#E9EFFA; --muted:#92A2C2; --faint:#62759B;
+  --mint:#2DF5B8; --cyan:#2AB7FF; --amber:#FFB938; --coral:#FF5D6C;
+  --brand:linear-gradient(135deg,#2DF5B8 0%,#2AB7FF 100%);
+  --amber-soft:rgba(255,185,56,.12); --coral-soft:rgba(255,93,108,.12); --mint-soft:rgba(45,245,184,.10);
+  --sora:'Sora',system-ui,sans-serif; --sans:'DM Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --safe-b:env(safe-area-inset-bottom,0px); --safe-t:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{height:100%;background:var(--bg);}
+body{height:100%;font-family:var(--sans);font-size:16px;line-height:1.4;color:var(--text);background:var(--bg);overflow:hidden;}
+button,input,textarea{font:inherit;color:inherit;}
+button{cursor:pointer;}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:8px;}
+[hidden]{display:none!important;}
+
+.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── Estructura ── */
+.app{position:relative;height:100dvh;max-width:480px;margin:0 auto;display:flex;flex-direction:column;
+  background:radial-gradient(70% 38% at 50% -4%,rgba(45,245,184,.11),transparent 70%),var(--bg);
+  border-inline:1px solid transparent;}
+@media(min-width:520px){.app{border-inline-color:var(--line);box-shadow:0 0 80px rgba(0,0,0,.5);}}
+
+/* ── Cabecera ── */
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(12px + var(--safe-t)) 18px 12px;flex:none;}
+.brand{display:flex;align-items:center;gap:12px;min-width:0;}
+.mark{width:42px;height:42px;flex:none;filter:drop-shadow(0 4px 14px rgba(42,183,255,.28));}
+.wordmark{font-family:var(--sora);font-weight:700;font-size:1.3rem;letter-spacing:.16em;line-height:1;}
+.tagline{font-size:.75rem;color:var(--muted);margin-top:5px;white-space:nowrap;}
+.chip-state{display:inline-flex;align-items:center;gap:7px;padding:6px 12px 6px 10px;border-radius:99px;
+  font-size:.78rem;font-weight:600;background:var(--mint-soft);color:var(--mint);border:1px solid rgba(45,245,184,.22);white-space:nowrap;}
+.chip-state::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;}
+.chip-state.warn{background:var(--amber-soft);color:var(--amber);border-color:rgba(255,185,56,.28);}
+.chip-state.crit{background:var(--coral-soft);color:var(--coral);border-color:rgba(255,93,108,.3);}
+
+/* ── Páginas ── */
+main{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:6px 16px 28px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+main::-webkit-scrollbar{display:none;}
+.page{display:flex;flex-direction:column;gap:14px;}
+
+/* ── Nav inferior ── */
+.nav{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 12px calc(8px + var(--safe-b));
+  background:rgba(8,13,25,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border:0;border-radius:14px;background:none;
+  color:var(--faint);font-size:.74rem;font-weight:600;min-height:52px;transition:color .2s,background .2s;}
+.nav button .i{width:22px;height:22px;}
+.nav button[aria-current="page"]{color:var(--mint);background:var(--mint-soft);}
+
+/* ── Hero ── */
+.hero{background:linear-gradient(180deg,var(--panel-2) 0%,var(--panel) 100%);border:1px solid var(--line);border-radius:26px;padding:18px 16px 16px;}
+.alert{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;margin-bottom:6px;border:1px solid;animation:slide .3s ease-out;}
+.alert .i{margin-top:2px;width:20px;height:20px;}
+.alert b{display:block;font-size:.95rem;line-height:1.25;}
+.alert span{display:block;font-size:.82rem;opacity:.85;margin-top:2px;}
+.alert.warn{background:var(--amber-soft);border-color:rgba(255,185,56,.35);color:var(--amber);}
+.alert.crit{background:var(--coral-soft);border-color:rgba(255,93,108,.4);color:var(--coral);}
+@keyframes slide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+.gauge{position:relative;width:min(272px,76vw);aspect-ratio:1;margin:4px auto 0;}
+.gauge svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+.g-track{fill:none;stroke:rgba(42,183,255,.14);stroke-width:12;stroke-linecap:round;}
+.g-fill{fill:none;stroke:url(#gGrad);stroke-width:12;stroke-linecap:round;stroke-dasharray:0 100;transition:stroke-dasharray 1.1s cubic-bezier(.22,.8,.25,1),opacity .2s;filter:drop-shadow(0 0 7px rgba(45,245,184,.35));}
+.gauge.warn .g-fill{stroke:var(--amber);filter:drop-shadow(0 0 7px rgba(255,185,56,.35));}
+.gauge.crit .g-fill{stroke:var(--coral);filter:drop-shadow(0 0 7px rgba(255,93,108,.4));}
+.tick{stroke-width:3;stroke-linecap:round;}
+.tick.t-min{stroke:var(--coral);} .tick.t-warn{stroke:var(--amber);}
+.g-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:6%;}
+.g-pct{font-family:var(--sora);font-weight:700;font-size:clamp(3.2rem,15vw,4.1rem);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+.g-pct small{font-size:.42em;font-weight:600;color:var(--muted);margin-left:2px;letter-spacing:0;}
+.gauge.warn .g-pct{color:var(--amber);} .gauge.crit .g-pct{color:var(--coral);}
+.g-lbl{font-size:.85rem;color:var(--muted);margin-top:6px;}
+
+.legend{display:flex;justify-content:center;gap:16px;margin:-8px 0 14px;font-size:.78rem;color:var(--muted);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.legend i{width:12px;height:3px;border-radius:2px;background:var(--amber);}
+.legend i.c{background:var(--coral);}
+
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:14px;border-block:1px solid var(--line);}
+.metric{padding:12px 6px;text-align:center;}
+.metric+.metric{border-inline-start:1px solid var(--line);}
+.metric b{display:block;font-family:var(--sora);font-weight:600;font-size:1.12rem;font-variant-numeric:tabular-nums;}
+.metric b small{font-family:var(--sans);font-size:.7rem;font-weight:500;color:var(--muted);margin-left:2px;}
+.metric span{display:block;font-size:.74rem;color:var(--muted);margin-top:3px;}
+
+/* ── Botones ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 12px;border-radius:14px;border:1px solid var(--line-2);white-space:nowrap;
+  background:var(--panel-2);font-weight:600;font-size:.92rem;transition:transform .12s,background .2s,border-color .2s;}
+.btn:active{transform:scale(.97);}
+.btn.primary{width:100%;border:0;background:var(--brand);color:#04131A;font-family:var(--sora);font-weight:600;font-size:.95rem;min-height:52px;
+  box-shadow:0 8px 24px rgba(42,183,255,.22);}
+.btn.danger{color:var(--coral);border-color:rgba(255,93,108,.35);background:var(--coral-soft);}
+.btn.small{min-height:36px;padding:0 12px;font-size:.82rem;border-radius:10px;gap:6px;}
+.btn .i{width:18px;height:18px;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.row.three{grid-template-columns:1fr 1fr 1fr;}
+
+/* ── Totales ── */
+.totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.total{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;}
+.total .i{width:20px;height:20px;color:var(--cyan);}
+.total:nth-child(2) .i{color:var(--mint);}
+.total b{display:block;font-family:var(--sora);font-weight:700;font-size:1.9rem;line-height:1;margin-top:14px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.total b small{font-family:var(--sans);font-size:.8rem;font-weight:500;color:var(--muted);margin-left:4px;letter-spacing:0;}
+.total span{display:block;font-size:.82rem;color:var(--muted);margin-top:6px;}
+
+/* ── Paneles ── */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 6px;}
+.panel-h h2{font-family:var(--sora);font-weight:600;font-size:.98rem;}
+.panel-h p{font-size:.78rem;color:var(--muted);margin-top:2px;}
+
+.chart{display:flex;align-items:flex-end;gap:6px;height:128px;overflow-x:auto;padding:8px 16px 14px;scrollbar-width:none;}
+.chart::-webkit-scrollbar{display:none;}
+.col{flex:1 0 28px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%;}
+.col .bar{width:16px;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,var(--cyan),rgba(42,183,255,.35));min-height:5px;}
+.col:last-child .bar{background:var(--brand);}
+.col .v{font-size:.7rem;font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;}
+.col .d{font-size:.66rem;color:var(--faint);}
+.empty{padding:26px 16px 30px;text-align:center;color:var(--muted);font-size:.9rem;}
+.empty .i{width:30px;height:30px;color:var(--faint);margin-bottom:8px;}
+
+.spec{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-top:1px solid var(--line);}
+.spec:first-of-type{border-top:0;}
+.spec span{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.9rem;}
+.spec span .i{color:var(--faint);width:17px;height:17px;}
+.spec b{font-family:var(--sora);font-weight:600;font-size:.88rem;font-variant-numeric:tabular-nums;}
+.spec.k-min b{color:var(--coral);} .spec.k-warn b{color:var(--amber);}
+
+/* ── Formulario ── */
+.form{padding:6px 16px 18px;display:flex;flex-direction:column;gap:14px;}
+.field label{display:flex;align-items:center;gap:7px;font-size:.84rem;font-weight:600;color:var(--muted);margin-bottom:7px;}
+.field label .i{width:15px;height:15px;color:var(--faint);}
+.input,.textarea{display:block;width:100%;min-width:0;min-height:50px;padding:0 14px;border-radius:13px;background:var(--bg);border:1px solid var(--line-2);outline:none;font-size:1rem;transition:border-color .2s,box-shadow .2s;appearance:none;-webkit-appearance:none;}
+.textarea{padding:12px 14px;min-height:78px;resize:none;}
+.input:focus,.textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(42,183,255,.15);}
+.input.big{font-family:var(--sora);font-weight:600;font-size:1.4rem;}
+.input::-webkit-calendar-picker-indicator{filter:invert(.7);}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.hint{font-size:.8rem;color:var(--muted);margin-top:7px;}
+
+.preview{border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:14px;}
+.preview h3{font-size:.84rem;font-weight:600;color:var(--muted);margin-bottom:10px;}
+.pv{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;}
+.pv div+div{border-inline-start:1px solid var(--line);}
+.pv b{display:block;font-family:var(--sora);font-weight:600;font-size:1.2rem;font-variant-numeric:tabular-nums;}
+.pv span{display:block;font-size:.74rem;color:var(--muted);margin-top:3px;}
+.pv .ok{color:var(--mint);} .pv .warn{color:var(--amber);} .pv .crit{color:var(--coral);}
+.pv-note{margin-top:12px;padding:10px 12px;border-radius:11px;font-size:.84rem;display:flex;gap:9px;align-items:flex-start;}
+.pv-note .i{margin-top:1px;width:17px;height:17px;}
+.pv-note.warn{background:var(--amber-soft);color:var(--amber);} .pv-note.crit{background:var(--coral-soft);color:var(--coral);}
+
+/* ── Historial ── */
+.filters{display:flex;gap:8px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none;}
+.filters::-webkit-scrollbar{display:none;}
+.fchip{flex:none;min-height:36px;padding:0 15px;border-radius:99px;border:1px solid var(--line-2);background:none;color:var(--muted);font-size:.84rem;font-weight:600;}
+.fchip[aria-pressed="true"]{background:var(--mint-soft);border-color:rgba(45,245,184,.4);color:var(--mint);}
+.summary{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);padding:0 2px;}
+.trip{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:13px 14px 12px 16px;position:relative;}
+.trip::before{content:'';position:absolute;inset:12px auto 12px 0;width:3px;border-radius:0 3px 3px 0;background:var(--cyan);}
+.trip.med::before{background:var(--amber);} .trip.hi::before{background:var(--coral);}
+.trip .when{font-size:.8rem;color:var(--muted);}
+.trip .km{font-family:var(--sora);font-weight:700;font-size:1.35rem;text-align:right;line-height:1.1;font-variant-numeric:tabular-nums;}
+.trip .km small{font-family:var(--sans);font-size:.7rem;font-weight:500;color:var(--muted);margin-left:3px;}
+.trip .note{grid-column:1/-1;font-size:.82rem;color:var(--muted);margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.trip .use{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin-top:8px;}
+.track{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.07);overflow:hidden;}
+.track i{display:block;height:100%;border-radius:3px;background:var(--cyan);}
+.trip.med .track i{background:var(--amber);} .trip.hi .track i{background:var(--coral);}
+.use em{font-style:normal;font-size:.76rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:42px;text-align:right;}
+.del{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;border:0;background:none;color:var(--faint);}
+.del:hover,.del:active{color:var(--coral);background:var(--coral-soft);}
+
+/* ── Hoja inferior ── */
+.backdrop{position:fixed;inset:0;z-index:50;background:rgba(3,6,14,.66);backdrop-filter:blur(3px);display:flex;align-items:flex-end;justify-content:center;animation:fade .2s ease-out;}
+.sheet{width:100%;max-width:480px;max-height:92dvh;overflow-y:auto;background:var(--panel);border:1px solid var(--line-2);border-bottom:0;border-radius:26px 26px 0 0;
+  padding:10px 18px calc(20px + var(--safe-b));animation:rise .28s cubic-bezier(.22,.8,.25,1);}
+.grab{width:38px;height:4px;border-radius:2px;background:var(--line-2);margin:0 auto 14px;}
+.sheet h2{font-family:var(--sora);font-weight:700;font-size:1.15rem;margin-bottom:4px;}
+.sheet .lead{color:var(--muted);font-size:.9rem;margin-bottom:16px;}
+.sheet .actions{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:18px;}
+.sheet .actions.one{grid-template-columns:1fr;}
+.sheet .section{font-family:var(--sora);font-size:.84rem;font-weight:600;color:var(--cyan);margin:6px 0 10px;}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.quick button{min-height:36px;padding:0 14px;border-radius:99px;border:1px solid var(--line-2);background:none;color:var(--muted);font-weight:600;font-size:.84rem;}
+.range{width:100%;margin-top:16px;accent-color:#2DF5B8;height:28px;}
+.fields{display:flex;flex-direction:column;gap:12px;}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+
+/* ── Aviso emergente ── */
+.toast{position:fixed;left:50%;top:calc(var(--safe-t) + 74px);transform:translate(-50%,-12px);z-index:80;width:max-content;max-width:min(92vw,440px);
+  display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;font-weight:600;font-size:.9rem;
+  background:#10213A;border:1px solid var(--line-2);box-shadow:0 14px 40px rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+.toast.ok{border-color:rgba(45,245,184,.45);color:var(--mint);}
+.toast.warn{border-color:rgba(255,185,56,.5);color:var(--amber);}
+.toast.err{border-color:rgba(255,93,108,.55);color:var(--coral);}
+
+@media(max-width:360px){.tagline{display:none}.metric b{font-size:1rem}.g-pct{font-size:3rem}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><!-- Iconos Lucide (ISC License) --><symbol id="i-route" viewBox="0 0 24 24"><path d="M9 5h8.5a1 1 0 010 7h-11a1 1 0 000 7H15" /><circle cx="18" cy="19" r="3" /><circle cx="6" cy="5" r="3" /></symbol><symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528" /></symbol><symbol id="i-plug-zap" viewBox="0 0 24 24"><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z" /><path d="m2 22 3-3" /><path d="M7.5 13.5 10 11" /><path d="M10.5 16.5 13 14" /><path d="m18 3-4 4h6l-4 4" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 3v12" /><path d="m17 8-5-5-5 5" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /></symbol><symbol id="i-sliders-horizontal" viewBox="0 0 24 24"><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="M12 5v14" /></symbol><symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M12 7v5l4 2" /></symbol><symbol id="i-trash-2" viewBox="0 0 24 24"><path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></symbol><symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></symbol><symbol id="i-circle-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /></symbol><symbol id="i-notebook-pen" viewBox="0 0 24 24"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4" /><path d="M2 6h4" /><path d="M2 10h4" /><path d="M2 14h4" /><path d="M2 18h4" /><path d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" /></symbol><symbol id="i-weight" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3" /><path d="M6.5 8a2 2 0 0 0-1.905 1.46L2.1 18.5A2 2 0 0 0 4 21h16a2 2 0 0 0 1.925-2.54L19.4 9.5A2 2 0 0 0 17.48 8Z" /></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /><path d="m15 5 4 4" /></symbol><symbol id="i-circle-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="12" r="10" /></symbol><symbol id="i-battery-charging" viewBox="0 0 24 24"><path d="m11 7-3 5h4l-3 5" /><path d="M14.856 6H16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.935" /><path d="M22 14v-4" /><path d="M5.14 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2.936" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-layout-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1" /><rect width="7" height="5" x="14" y="3" rx="1" /><rect width="7" height="9" x="14" y="12" rx="1" /><rect width="7" height="5" x="3" y="16" rx="1" /></symbol></svg>
+<div class="app">
+  <header class="header">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="12 12 84 84" class="mark" role="img" aria-label="Logo de ZEUS"><defs>
+<linearGradient id="zm-bg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="108" y2="108"><stop offset="0" stop-color="#0E1A33"/><stop offset="1" stop-color="#070C1A"/></linearGradient>
+<linearGradient id="zm-ring" gradientUnits="userSpaceOnUse" x1="24" y1="84" x2="84" y2="24"><stop offset="0" stop-color="#2DF5B8"/><stop offset="1" stop-color="#2AB7FF"/></linearGradient>
+<linearGradient id="zm-bolt" gradientUnits="userSpaceOnUse" x1="54" y1="36" x2="54" y2="72"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#B9FBE9"/></linearGradient>
+<radialGradient id="zm-glow" gradientUnits="userSpaceOnUse" cx="54" cy="54" r="40"><stop offset="0" stop-color="#22E1C0" stop-opacity=".28"/><stop offset="1" stop-color="#22E1C0" stop-opacity="0"/></radialGradient>
+</defs><clipPath id="zm-c"><rect x="12" y="12" width="84" height="84" rx="19"/></clipPath><g clip-path="url(#zm-c)"><rect width="108" height="108" fill="url(#zm-bg)"/><circle cx="54" cy="54" r="40" fill="url(#zm-glow)"/><path d="M34.20 73.80A28 28 0 1 1 73.80 73.80" fill="none" stroke="#2AB7FF" stroke-opacity=".22" stroke-width="6.5" stroke-linecap="round"/><path d="M34.20 73.80A28 28 0 1 1 81.66 49.62" fill="none" stroke="url(#zm-ring)" stroke-width="6.5" stroke-linecap="round"/><path d="M44.98 39.24L65.48 39.24L55.23 50.31L63.84 50.31L43.34 68.76L51.13 56.87L42.93 56.87L53.18 45.80L44.98 45.80Z" fill="url(#zm-bolt)" stroke="url(#zm-bolt)" stroke-width="1.2" stroke-linejoin="round"/></g></svg>
+      <div>
+        <div class="wordmark">ZEUS</div>
+        <div class="tagline">Evolución en dos ruedas</div>
+      </div>
+    </div>
+    <div class="chip-state" id="chip-state">Batería óptima</div>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══ Inicio ═══ -->
+    <section class="page" id="pg-inicio" aria-label="Inicio">
+      <div class="hero">
+        <div class="alert" id="alert" role="alert" hidden>
+          <svg class="i"><use href="#i-triangle-alert"/></svg>
+          <div><b id="alert-t"></b><span id="alert-s"></span></div>
+        </div>
+
+        <div class="gauge" id="gauge">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <defs><linearGradient id="gGrad" gradientUnits="userSpaceOnUse" x1="30" y1="170" x2="170" y2="30"><stop offset="0" stop-color="#2DF5B8"/><stop offset="1" stop-color="#2AB7FF"/></linearGradient></defs>
+            <path class="g-track" id="g-track" pathLength="100"/>
+            <path class="g-fill" id="g-fill" pathLength="100"/>
+            <g id="ticks"></g>
+          </svg>
+          <div class="g-center">
+            <div class="g-pct"><span id="pct">0</span><small>%</small></div>
+            <div class="g-lbl">de carga</div>
+          </div>
+        </div>
+        <div class="legend"><span><i></i>Aviso <b id="lg-warn">30%</b></span><span><i class="c"></i>Alerta <b id="lg-min">20%</b></span></div>
+
+        <div class="metrics">
+          <div class="metric"><b id="m-rng">0<small>km</small></b><span>Autonomía</span></div>
+          <div class="metric"><b id="m-wh">0<small>Wh</small></b><span>Energía</span></div>
+          <div class="metric"><b id="m-lim">0<small>km</small></b><span>Hasta la alerta</span></div>
+        </div>
+
+        <button class="btn primary" id="btn-full"><svg class="i"><use href="#i-plug-zap"/></svg>Cargar al 100%</button>
+        <div class="row">
+          <button class="btn" id="btn-ajustar"><svg class="i"><use href="#i-sliders-horizontal"/></svg>Ajustar nivel</button>
+          <button class="btn" id="btn-export"><svg class="i"><use href="#i-download"/></svg>Exportar</button>
+        </div>
+      </div>
+
+      <div class="totals">
+        <div class="total"><svg class="i"><use href="#i-route"/></svg><b id="s-km">0<small>km</small></b><span>Distancia total</span></div>
+        <div class="total"><svg class="i"><use href="#i-flag"/></svg><b id="s-viajes">0</b><span>Recorridos registrados</span></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h"><div><h2>Últimos 12 recorridos</h2><p>Kilómetros por salida</p></div></div>
+        <div class="chart" id="chart"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h"><h2>Especificaciones</h2>
+          <button class="btn small" id="btn-specs"><svg class="i"><use href="#i-pencil"/></svg>Editar</button></div>
+        <div id="specs"></div>
+      </div>
+    </section>
+
+    <!-- ═══ Registrar ═══ -->
+    <section class="page" id="pg-registrar" aria-label="Registrar recorrido" hidden>
+      <div class="panel">
+        <div class="panel-h"><div><h2>Nuevo recorrido</h2><p>Se descuenta de la batería automáticamente</p></div></div>
+        <form class="form" id="form-trip" novalidate>
+          <div class="field"><label for="f-km"><svg class="i"><use href="#i-route"/></svg>Distancia (km)</label>
+            <input class="input big" type="text" inputmode="decimal" id="f-km" placeholder="12,5" autocomplete="off" required></div>
+          <div class="field"><label for="f-fecha"><svg class="i"><use href="#i-calendar"/></svg>Fecha y hora</label>
+            <input class="input" type="datetime-local" id="f-fecha" required></div>
+          <div class="field"><label for="f-notas"><svg class="i"><use href="#i-notebook-pen"/></svg>Notas (opcional)</label>
+            <textarea class="textarea" id="f-notas" placeholder="Ruta, carga, observaciones…"></textarea></div>
+
+          <div class="preview" aria-live="polite">
+            <h3>Consumo estimado</h3>
+            <div class="pv">
+              <div><b id="pv-uso">—</b><span>Se usará</span></div>
+              <div><b id="pv-queda">—</b><span>Quedará</span></div>
+              <div><b id="pv-estado">—</b><span>Estado</span></div>
+            </div>
+            <div class="pv-note" id="pv-note" hidden><svg class="i"><use href="#i-triangle-alert"/></svg><span id="pv-note-t"></span></div>
+          </div>
+
+          <button type="submit" class="btn primary"><svg class="i"><use href="#i-check"/></svg>Guardar recorrido</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ═══ Historial ═══ -->
+    <section class="page" id="pg-historial" aria-label="Historial" hidden>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por mes"></div>
+      <div class="summary" id="summary"></div>
+      <div class="page" id="trips" style="gap:10px"></div>
+      <div class="row three" style="margin-top:4px">
+        <button class="btn small" id="btn-export2"><svg class="i"><use href="#i-download"/></svg>Exportar</button>
+        <button class="btn small" id="btn-import"><svg class="i"><use href="#i-upload"/></svg>Importar</button>
+        <button class="btn small danger" id="btn-clear"><svg class="i"><use href="#i-trash-2"/></svg>Borrar</button>
+      </div>
+      <input type="file" id="file-import" accept="application/json,.json" hidden>
+    </section>
+  </main>
+
+  <nav class="nav" aria-label="Secciones">
+    <button data-pg="inicio" aria-current="page"><svg class="i"><use href="#i-layout-dashboard"/></svg>Inicio</button>
+    <button data-pg="registrar"><svg class="i"><use href="#i-plus"/></svg>Registrar</button>
+    <button data-pg="historial"><svg class="i"><use href="#i-history"/></svg>Historial</button>
+  </nav>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="sheet-root"></div>
+
+<script>
+'use strict';
+/* ═══════════ Utilidades ═══════════ */
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf = (n, d = 0) => Number(n).toLocaleString('es', {minimumFractionDigits: d, maximumFractionDigits: d});
+const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
+const num = (v, fb) => { const n = parseFloat(String(v ?? '').trim().replace(',', '.')); return Number.isFinite(n) ? n : fb; };
+const icon = n => `<svg class="i"><use href="#i-${n}"/></svg>`;
+
+/* ═══════════ Datos y almacenamiento ═══════════ */
+const K = {rec: 'zeusR3', bat: 'zeusB3', odo: 'zeusO3', spec: 'zeusS3'};   // mismas claves que la versión anterior
+const DEFAULT_SPECS = {cap: 1200, auto: 70, peso: 126.69, psi: 35, min: 20, warn: 30};
+
+const read = (k, fb) => { try { const v = localStorage.getItem(k); return v == null ? fb : JSON.parse(v); } catch { return fb; } };
+const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+
+// Normaliza un recorrido: conserva solo fecha, km, batería usada y notas (también al importar respaldos antiguos)
+const cleanTrip = r => ({fecha: String(r.fecha || ''), km: num(r.km, 0), bateriaUsada: num(r.bateriaUsada, 0), notas: String(r.notas || '')});
+
+let registros = (Array.isArray(read(K.rec, [])) ? read(K.rec, []) : []).map(cleanTrip);
+let bat = clamp(num(read(K.bat, 100), 100), 0, 100);
+let odo = Math.max(0, num(read(K.odo, 0), 0));
+let specs = {...DEFAULT_SPECS, ...(read(K.spec, {}) || {})};
+const save = () => { write(K.rec, registros); write(K.bat, bat); write(K.odo, odo); write(K.spec, specs); };
+save();
+
+const calcUso = km => km / specs.auto * 100;           // % de batería por kilómetro
+const levelOf = p => p <= specs.min ? 'crit' : p <= specs.warn ? 'warn' : 'ok';
+
+/* ═══════════ Avisos ═══════════ */
+let toastTimer;
+function toast(msg, type = 'ok', ms = 3200) {
+  const el = $('#toast');
+  const ic = {ok: 'check', warn: 'triangle-alert', err: 'circle-alert'}[type];
+  el.className = 'toast ' + type; el.innerHTML = icon(ic) + `<span>${esc(msg)}</span>`;
+  void el.offsetWidth; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), ms);
+}
+// Avisa si el nivel llegó al límite de alerta o al aviso; nunca bloquea nada
+function levelToast(prefix = '') {
+  const lv = levelOf(bat);
+  if (lv === 'crit') {
+    toast(prefix ? `${prefix}Alerta: llegaste al límite de ${nf(specs.min)}%.` : `Batería en ${nf(bat)}%: llegaste al límite de alerta (${nf(specs.min)}%).`, 'err', 4800);
+    navigator.vibrate?.([140, 80, 140]);
+  } else if (lv === 'warn') {
+    toast(prefix ? `${prefix}Batería baja, carga pronto.` : `Batería baja: ${nf(bat)}%. Carga pronto.`, 'warn', 4200);
+    navigator.vibrate?.(90);
+  } else if (prefix) toast(prefix.trim().replace(/[.:]$/, ''), 'ok');
+}
+
+/* ═══════════ Hoja inferior ═══════════ */
+function openSheet(html, mount) {
+  closeSheet();
+  const root = $('#sheet-root');
+  root.innerHTML = `<div class="backdrop" id="bd"><div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div></div>`;
+  $('#bd').addEventListener('click', e => { if (e.target.id === 'bd') closeSheet(); });
+  mount?.($('.sheet'));
+  const first = root.querySelector('input'); first?.focus({preventScroll: true});
+}
+function closeSheet() { $('#sheet-root').innerHTML = ''; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+
+function confirmSheet({title, text, ok = 'Confirmar', danger = false}) {
+  return new Promise(res => {
+    openSheet(`<h2>${esc(title)}</h2><p class="lead">${esc(text)}</p>
+      <div class="actions"><button class="btn" data-a="no">Cancelar</button>
+      <button class="btn ${danger ? 'danger' : 'primary'}" data-a="ok">${esc(ok)}</button></div>`,
+      s => s.addEventListener('click', e => { const a = e.target.closest('[data-a]')?.dataset.a; if (a) { closeSheet(); res(a === 'ok'); } }));
+  });
+}
+
+/* ═══════════ Medidor de batería ═══════════ */
+const G = {c: 100, r: 84};
+const gp = (v, r = G.r) => { const a = (135 + 2.7 * v) * Math.PI / 180; return [G.c + r * Math.cos(a), G.c + r * Math.sin(a)]; };
+const arcD = (() => { const [x0, y0] = gp(0), [x1, y1] = gp(100); return `M${x0.toFixed(2)} ${y0.toFixed(2)}A${G.r} ${G.r} 0 1 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`; })();
+$('#g-track').setAttribute('d', arcD); $('#g-fill').setAttribute('d', arcD);
+const tickLine = (v, cls) => { const [x1, y1] = gp(v, G.r - 13), [x2, y2] = gp(v, G.r + 13); return `<line class="tick ${cls}" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`; };
+
+let firstPaint = true;
+function updateBat() {
+  const p = clamp(bat, 0, 100), lv = levelOf(p);
+  const g = $('#gauge'); g.className = 'gauge ' + (lv === 'ok' ? '' : lv);
+  const fill = $('#g-fill');
+  fill.style.opacity = p < 0.4 ? 0 : 1;
+  requestAnimationFrame(() => fill.style.strokeDasharray = `${p} 100`);
+  $('#ticks').innerHTML = tickLine(clamp(specs.warn, 0, 100), 't-warn') + tickLine(clamp(specs.min, 0, 100), 't-min');
+
+  const pctEl = $('#pct');
+  if (firstPaint) { firstPaint = false; countUp(pctEl, p, 900); } else { cuId++; pctEl.textContent = nf(p); }
+
+  const rng = specs.auto * p / 100, wh = specs.cap * p / 100, lim = Math.max(0, p - specs.min) * specs.auto / 100;
+  $('#m-rng').innerHTML = `${nf(rng, 1)}<small>km</small>`;
+  $('#m-wh').innerHTML = `${nf(wh)}<small>Wh</small>`;
+  $('#m-lim').innerHTML = `${nf(lim, 1)}<small>km</small>`;
+  $('#lg-warn').textContent = nf(specs.warn) + '%'; $('#lg-min').textContent = nf(specs.min) + '%';
+
+  const chip = $('#chip-state');
+  chip.className = 'chip-state ' + (lv === 'ok' ? '' : lv);
+  chip.textContent = {ok: 'Batería óptima', warn: 'Batería baja', crit: 'Batería crítica'}[lv];
+
+  const al = $('#alert'); al.hidden = lv === 'ok';
+  if (lv !== 'ok') {
+    al.className = 'alert ' + lv;
+    $('#alert-t').textContent = lv === 'crit' ? `Alerta: batería en ${nf(p)}%` : `Batería baja: ${nf(p)}%`;
+    $('#alert-s').textContent = lv === 'crit'
+      ? `Alcanzaste el límite de ${nf(specs.min)}%. Puedes seguir registrando recorridos.`
+      : `Estás por debajo del aviso de ${nf(specs.warn)}%. Conviene cargar pronto.`;
+  }
+}
+let cuId = 0;   // evita que una animación vieja pise un valor más reciente
+function countUp(el, to, dur) {
+  const id = ++cuId, t0 = performance.now();
+  (function step(t) {
+    if (id !== cuId) return;
+    const k = Math.min((t - t0) / dur, 1);
+    el.textContent = nf(to * (1 - Math.pow(1 - k, 3)));
+    if (k < 1) requestAnimationFrame(step);
+  })(t0);
+}
+
+/* ═══════════ Panel de inicio ═══════════ */
+function updateDash() {
+  $('#s-km').innerHTML = `${nf(odo)}<small>km</small>`;
+  $('#s-viajes').textContent = nf(registros.length);
+  updateBat(); buildChart(); buildSpecs();
+}
+function buildChart() {
+  const el = $('#chart'), last = registros.slice(-12);
+  if (!last.length) { el.style.height = 'auto'; el.innerHTML = `<div class="empty" style="width:100%">${icon('route')}<br>Aún no hay recorridos. Registra el primero para ver tu actividad.</div>`; return; }
+  el.style.height = '';
+  const max = Math.max(...last.map(r => r.km), 1);
+  el.innerHTML = last.map(r => {
+    const d = new Date(r.fecha), lbl = isNaN(d) ? '' : `${d.getDate()}/${d.getMonth() + 1}`;
+    return `<div class="col"><span class="v">${nf(r.km, r.km % 1 ? 1 : 0)}</span><i class="bar" style="height:${Math.max(6, r.km / max * 62)}px"></i><span class="d">${lbl}</span></div>`;
+  }).join('');
+  el.scrollLeft = el.scrollWidth;
+}
+function buildSpecs() {
+  const rows = [
+    ['battery-charging', 'Capacidad de batería', `${nf(specs.cap)} Wh`, ''],
+    ['route', 'Autonomía máxima', `${nf(specs.auto)} km`, ''],
+    ['weight', 'Peso total', `${nf(specs.peso, 2)} kg`, ''],
+    ['circle-dot', 'Presión de neumáticos', `${nf(specs.psi)} PSI`, ''],
+    ['triangle-alert', 'Alerta de batería', `${nf(specs.min)}%`, 'k-min'],
+    ['bell', 'Aviso de batería baja', `${nf(specs.warn)}%`, 'k-warn'],
+  ];
+  $('#specs').innerHTML = rows.map(([i, k, v, c]) => `<div class="spec ${c}"><span>${icon(i)}${k}</span><b>${v}</b></div>`).join('');
+}
+
+/* ═══════════ Registrar ═══════════ */
+function setFecha() {
+  const now = new Date(); $('#f-fecha').value = new Date(now - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+}
+function updatePreview() {
+  const km = num($('#f-km').value, 0), note = $('#pv-note'), est = $('#pv-estado');
+  if (km <= 0) { ['#pv-uso', '#pv-queda', '#pv-estado'].forEach(s => { $(s).textContent = '—'; }); est.className = ''; note.hidden = true; return; }
+  const uso = calcUso(km), queda = bat - uso, lv = levelOf(queda);
+  $('#pv-uso').textContent = nf(uso, 1) + '%';
+  $('#pv-queda').textContent = nf(Math.max(0, queda), 1) + '%';
+  est.textContent = {ok: 'Óptimo', warn: 'Bajo', crit: 'Alerta'}[lv]; est.className = lv;
+  note.hidden = lv === 'ok';
+  if (lv !== 'ok') {
+    note.className = 'pv-note ' + lv;
+    $('#pv-note-t').textContent = queda < 0
+      ? `Este recorrido supera la batería disponible. Se guardará dejando el nivel en 0%.`
+      : lv === 'crit'
+        ? `Quedarás en ${nf(queda, 1)}%, en el límite de alerta (${nf(specs.min)}%). Puedes guardarlo igualmente.`
+        : `Quedarás por debajo del aviso de ${nf(specs.warn)}%.`;
+  }
+}
+$('#f-km').addEventListener('input', updatePreview);
+$('#form-trip').addEventListener('submit', e => {
+  e.preventDefault();
+  const km = num($('#f-km').value, 0);
+  if (km <= 0) { toast('Escribe una distancia mayor que 0 km.', 'err'); $('#f-km').focus(); return; }
+  const uso = calcUso(km), queda = bat - uso;
+  registros.push({fecha: $('#f-fecha').value || new Date().toISOString().slice(0, 16), km, bateriaUsada: uso, notas: $('#f-notas').value.trim()});
+  bat = Math.max(0, queda); odo += km; save();
+  $('#form-trip').reset(); setFecha(); updatePreview();
+  go('inicio'); updateDash();
+  levelToast(queda < 0 ? 'Recorrido guardado; superó la batería disponible. ' : 'Recorrido guardado. ');
+});
+
+/* ═══════════ Historial ═══════════ */
+let filtro = 'todos';
+const monthLabel = k => { const [y, m] = k.split('-'); return new Date(+y, +m - 1, 1).toLocaleDateString('es', {month: 'short', year: '2-digit'}).replace('.', ''); };
+function buildFilters() {
+  const months = [...new Set(registros.map(r => r.fecha.slice(0, 7)).filter(Boolean))].sort().reverse();
+  if (filtro !== 'todos' && !months.includes(filtro)) filtro = 'todos';
+  $('#filters').innerHTML = [['todos', 'Todos'], ...months.map(m => [m, monthLabel(m)])]
+    .map(([k, l]) => `<button class="fchip" data-f="${k}" aria-pressed="${k === filtro}">${esc(l)}</button>`).join('');
+}
+function renderTrips() {
+  buildFilters();
+  const list = registros.map((r, i) => ({r, i})).filter(x => filtro === 'todos' || x.r.fecha.startsWith(filtro)).reverse();
+  const km = list.reduce((s, x) => s + x.r.km, 0);
+  $('#summary').innerHTML = list.length ? `<span>${nf(list.length)} recorridos</span><span>${nf(km, km % 1 ? 1 : 0)} km</span>` : '';
+  if (!list.length) {
+    $('#trips').innerHTML = `<div class="empty">${icon('history')}<br>${registros.length ? 'No hay recorridos en este mes.' : 'Todavía no hay recorridos. Usa “Registrar” para añadir el primero o importa un respaldo.'}</div>`;
+    return;
+  }
+  $('#trips').innerHTML = list.map(({r, i}) => {
+    const d = new Date(r.fecha), ok = !isNaN(d);
+    const when = ok ? `${d.toLocaleDateString('es', {day: 'numeric', month: 'short', year: 'numeric'})} · ${d.toLocaleTimeString('es', {hour: '2-digit', minute: '2-digit'})}` : 'Sin fecha';
+    const cls = r.bateriaUsada > 40 ? 'hi' : r.bateriaUsada > 20 ? 'med' : '';
+    return `<article class="trip ${cls}">
+      <div class="when">${esc(when)}</div><div class="km">${nf(r.km, r.km % 1 ? 1 : 0)}<small>km</small></div>
+      ${r.notas ? `<div class="note">${esc(r.notas)}</div>` : ''}
+      <div class="use"><div class="track"><i style="width:${clamp(r.bateriaUsada, 0, 100)}%"></i></div><em>${nf(r.bateriaUsada, 1)}%</em>
+        <button class="del" data-i="${i}" aria-label="Eliminar recorrido">${icon('trash-2')}</button></div>
+    </article>`;
+  }).join('');
+}
+$('#filters').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (b) { filtro = b.dataset.f; renderTrips(); } });
+$('#trips').addEventListener('click', async e => {
+  const b = e.target.closest('.del'); if (!b) return;
+  const r = registros[+b.dataset.i]; if (!r) return;
+  if (await confirmSheet({title: 'Eliminar recorrido', text: `Se quitarán ${nf(r.km, r.km % 1 ? 1 : 0)} km y se devolverá ${nf(r.bateriaUsada, 1)}% a la batería.`, ok: 'Eliminar', danger: true})) {
+    bat = Math.min(100, bat + r.bateriaUsada); odo = Math.max(0, odo - r.km);
+    registros.splice(+b.dataset.i, 1); save(); updateDash(); renderTrips(); toast('Recorrido eliminado', 'warn');
+  }
+});
+
+/* ═══════════ Respaldo: exportar / importar ═══════════ */
+function exportar() {
+  if (!registros.length) { toast('No hay datos para exportar todavía.', 'warn'); return; }
+  const data = {especificaciones: {capacidadBateria: specs.cap, autonomiaMaxima: specs.auto, pesoTotal: specs.peso, presionNeumaticos: `${specs.psi} PSI`, bateriaMinima: specs.min, bateriaAdvertencia: specs.warn},
+    recorridos: registros, bateriaActual: bat, odometroTotal: odo};
+  const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'}));
+  const a = Object.assign(document.createElement('a'), {href: url, download: `zeus-${new Date().toISOString().slice(0, 10)}.json`});
+  document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1500);
+  toast('Respaldo exportado');
+}
+$('#file-import').addEventListener('change', async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  let d; try { d = JSON.parse(await f.text()); } catch { toast('El archivo no es un JSON válido.', 'err'); return; }
+  if (!d || !Array.isArray(d.recorridos)) { toast('No parece un respaldo de ZEUS (falta “recorridos”).', 'err'); return; }
+  const incoming = d.recorridos.map(cleanTrip).filter(r => r.km > 0);
+  if (!(await confirmSheet({title: 'Importar respaldo', text: `Se reemplazarán tus ${nf(registros.length)} recorridos actuales por ${nf(incoming.length)} del archivo.`, ok: 'Importar'}))) return;
+  const s = d.especificaciones || {};
+  registros = incoming;
+  bat = clamp(num(d.bateriaActual, 100), 0, 100);
+  odo = Math.max(0, num(d.odometroTotal, incoming.reduce((a, r) => a + r.km, 0)));
+  specs = {cap: num(s.capacidadBateria, specs.cap), auto: num(s.autonomiaMaxima, specs.auto), peso: num(s.pesoTotal, specs.peso),
+    psi: num(s.presionNeumaticos, specs.psi), min: clamp(num(s.bateriaMinima, specs.min), 0, 100), warn: clamp(num(s.bateriaAdvertencia, specs.warn), 0, 100)};
+  save(); filtro = 'todos'; updateDash(); renderTrips(); toast(`Importados ${nf(incoming.length)} recorridos`); levelToastSoft();
+});
+function levelToastSoft() { if (levelOf(bat) !== 'ok') setTimeout(() => levelToast(), 3400); }
+
+/* ═══════════ Ajustes: nivel de batería y límites ═══════════ */
+function adjustSheet() {
+  openSheet(`<h2>Ajustar nivel de batería</h2>
+    <p class="lead">Indica el porcentaje real que marca tu batería. Puedes usar cualquier valor de 0 a 100.</p>
+    <div class="field"><label for="a-val">Nivel actual (%)</label>
+      <input class="input big" id="a-val" type="text" inputmode="decimal" value="${nf(bat, bat % 1 ? 1 : 0).replace(',', '.')}" autocomplete="off"></div>
+    <input class="range" id="a-range" type="range" min="0" max="100" step="1" value="${Math.round(bat)}" aria-label="Nivel de batería">
+    <div class="quick">${[5, 10, 20, 30, 50, 80, 100].map(v => `<button data-v="${v}">${v}%</button>`).join('')}</div>
+    <p class="hint">Verás una alerta cuando el nivel sea ${nf(specs.min)}% o menos. Nunca se bloquea el ajuste.</p>
+    <div class="actions"><button class="btn" data-a="no">Cancelar</button><button class="btn primary" data-a="ok">Guardar nivel</button></div>`,
+  s => {
+    const val = s.querySelector('#a-val'), rg = s.querySelector('#a-range');
+    rg.addEventListener('input', () => val.value = rg.value);
+    val.addEventListener('input', () => { const n = num(val.value, NaN); if (!isNaN(n)) rg.value = clamp(n, 0, 100); });
+    s.addEventListener('click', e => {
+      const q = e.target.closest('[data-v]'); if (q) { val.value = q.dataset.v; rg.value = q.dataset.v; return; }
+      const a = e.target.closest('[data-a]')?.dataset.a; if (!a) return;
+      if (a === 'no') return closeSheet();
+      const n = num(val.value, NaN);
+      if (isNaN(n)) { toast('Escribe un número entre 0 y 100.', 'err'); return; }
+      bat = clamp(n, 0, 100); save(); closeSheet(); updateBat();
+      levelToast(n > 100 || n < 0 ? `Nivel ajustado a ${nf(bat)}% (rango válido 0–100). ` : `Nivel ajustado a ${nf(bat)}%. `);
+    });
+  });
+}
+function specsSheet() {
+  const f = (id, label, v, hint = '') => `<div class="field"><label for="${id}">${label}</label><input class="input" id="${id}" type="text" inputmode="decimal" value="${String(v).replace(',', '.')}" autocomplete="off">${hint ? `<p class="hint">${hint}</p>` : ''}</div>`;
+  openSheet(`<h2>Editar especificaciones</h2><p class="lead">Ajusta los datos de tu vehículo y los niveles de aviso.</p>
+    <div class="fields">
+      <div class="section">Niveles de aviso</div>
+      ${f('e-min', 'Alerta de batería (%)', specs.min, 'Cualquier valor es válido, incluso por debajo del 20%. Al llegar a este nivel o bajar de él, ZEUS te avisa.')}
+      ${f('e-warn', 'Aviso de batería baja (%)', specs.warn, 'Aviso previo, antes de llegar a la alerta.')}
+      <div class="section" style="margin-top:10px">Vehículo</div>
+      <div class="cols">${f('e-cap', 'Capacidad (Wh)', specs.cap)}${f('e-auto', 'Autonomía (km)', specs.auto)}</div>
+      <div class="cols">${f('e-peso', 'Peso total (kg)', specs.peso)}${f('e-psi', 'Neumáticos (PSI)', specs.psi)}</div>
+    </div>
+    <div class="actions"><button class="btn" data-a="no">Cancelar</button><button class="btn primary" data-a="ok">Guardar cambios</button></div>`,
+  s => s.addEventListener('click', e => {
+    const a = e.target.closest('[data-a]')?.dataset.a; if (!a) return;
+    if (a === 'no') return closeSheet();
+    const g = id => num(s.querySelector('#' + id).value, NaN);
+    const v = {min: g('e-min'), warn: g('e-warn'), cap: g('e-cap'), auto: g('e-auto'), peso: g('e-peso'), psi: g('e-psi')};
+    if (Object.values(v).some(isNaN)) { toast('Revisa los campos: todos deben ser números.', 'err'); return; }
+    if (v.cap <= 0 || v.auto <= 0) { toast('Capacidad y autonomía deben ser mayores que 0.', 'err'); return; }
+    v.min = clamp(v.min, 0, 100); v.warn = clamp(v.warn, 0, 100);
+    const raised = v.warn < v.min; if (raised) v.warn = v.min;
+    specs = v; save(); closeSheet(); updateDash();
+    toast(raised ? 'Guardado. El aviso se igualó a la alerta.' : 'Especificaciones guardadas'); 
+    if (levelOf(bat) !== 'ok') setTimeout(() => levelToast(), 3400);
+  }));
+}
+
+/* ═══════════ Botones y navegación ═══════════ */
+$('#btn-full').addEventListener('click', () => { bat = 100; save(); updateBat(); toast('Batería al 100%'); });
+$('#btn-ajustar').addEventListener('click', adjustSheet);
+$('#btn-specs').addEventListener('click', specsSheet);
+$('#btn-export').addEventListener('click', exportar);
+$('#btn-export2').addEventListener('click', exportar);
+$('#btn-import').addEventListener('click', () => $('#file-import').click());
+$('#btn-clear').addEventListener('click', async () => {
+  if (!registros.length && !odo) { toast('No hay nada que borrar.', 'warn'); return; }
+  if (await confirmSheet({title: 'Borrar todo el historial', text: 'Se eliminarán todos los recorridos y el odómetro volverá a 0. Esta acción no se puede deshacer. Exporta un respaldo antes si lo necesitas.', ok: 'Borrar todo', danger: true})) {
+    registros = []; odo = 0; bat = 100; save(); updateDash(); renderTrips(); toast('Historial borrado', 'warn');
+  }
+});
+
+const PAGES = ['inicio', 'registrar', 'historial'];
+function go(pg, push = true) {
+  if (!PAGES.includes(pg)) pg = 'inicio';
+  PAGES.forEach(p => { $('#pg-' + p).hidden = p !== pg; });
+  $$('.nav button').forEach(b => b.dataset.pg === pg ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+  $('#main').scrollTop = 0;
+  if (pg === 'historial') renderTrips();
+  if (pg === 'registrar') updatePreview();
+  if (push) history.replaceState(null, '', pg === 'inicio' ? location.pathname + location.search : '#' + pg);
+}
+$$('.nav button').forEach(b => b.addEventListener('click', () => go(b.dataset.pg)));
+window.addEventListener('hashchange', () => go(location.hash.slice(1), false));
+
+/* ═══════════ Inicio ═══════════ */
+setFecha(); updateDash();
+go(location.hash.slice(1) || 'inicio', false);
+if (levelOf(bat) === 'crit') setTimeout(() => levelToast(), 900);
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+{
+  "especificaciones": {
+    "capacidadBateria": 1200,
+    "autonomiaMaxima": 70,
+    "pesoTotal": 126.69,
+    "presionNeumaticos": "35 PSI",
+    "bateriaMinima": 20,
+    "bateriaAdvertencia": 30
+  },
+  "recorridos": [
+    {
+      "fecha": "2026-08-03T08:10",
+      "km": 4,
+      "bateriaUsada": 5.714,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-08-05T06:14",
+      "km": 16,
+      "bateriaUsada": 22.857,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-08-07T06:46",
+      "km": 10,
+      "bateriaUsada": 14.286,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-08-08T11:12",
+      "km": 8,
+      "bateriaUsada": 11.429,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-08-09T15:15",
+      "km": 12,
+      "bateriaUsada": 17.143,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-08-12T13:51",
+      "km": 7,
+      "bateriaUsada": 10.0,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-08-13T12:26",
+      "km": 15,
+      "bateriaUsada": 21.429,
+      "notas": "Ida y vuelta"
+    },
+    {
+      "fecha": "2026-08-15T13:00",
+      "km": 12,
+      "bateriaUsada": 17.143,
+      "notas": "Ida y vuelta"
+    },
+    {
+      "fecha": "2026-08-18T13:06",
+      "km": 10,
+      "bateriaUsada": 14.286,
+      "notas": "Centro"
+    },
+    {
+      "fecha": "2026-08-19T12:42",
+      "km": 5,
+      "bateriaUsada": 7.143,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-08-21T17:31",
+      "km": 4,
+      "bateriaUsada": 5.714,
+      "notas": "Paseo"
+    },
+    {
+      "fecha": "2026-08-24T22:54",
+      "km": 14,
+      "bateriaUsada": 20.0,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-08-25T22:59",
+      "km": 14,
+      "bateriaUsada": 20.0,
+      "notas": "Paseo"
+    },
+    {
+      "fecha": "2026-08-28T06:17",
+      "km": 8,
+      "bateriaUsada": 11.429,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-08-31T10:27",
+      "km": 4,
+      "bateriaUsada": 5.714,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-09-02T14:29",
+      "km": 8,
+      "bateriaUsada": 11.429,
+      "notas": "Centro"
+    },
+    {
+      "fecha": "2026-09-04T18:07",
+      "km": 2,
+      "bateriaUsada": 2.857,
+      "notas": "Paseo"
+    },
+    {
+      "fecha": "2026-09-05T17:24",
+      "km": 2,
+      "bateriaUsada": 2.857,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-09-06T20:05",
+      "km": 25,
+      "bateriaUsada": 35.714,
+      "notas": "Ida y vuelta"
+    },
+    {
+      "fecha": "2026-09-08T22:06",
+      "km": 25,
+      "bateriaUsada": 35.714,
+      "notas": "Centro"
+    },
+    {
+      "fecha": "2026-09-09T21:37",
+      "km": 5,
+      "bateriaUsada": 7.143,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-09-11T22:24",
+      "km": 21,
+      "bateriaUsada": 30.0,
+      "notas": "Mandados"
+    },
+    {
+      "fecha": "2026-09-14T06:29",
+      "km": 6,
+      "bateriaUsada": 8.571,
+      "notas": "Paseo"
+    },
+    {
+      "fecha": "2026-09-16T08:37",
+      "km": 11,
+      "bateriaUsada": 15.714,
+      "notas": "Ida y vuelta"
+    },
+    {
+      "fecha": "2026-09-18T12:20",
+      "km": 7,
+      "bateriaUsada": 10.0,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-09-19T11:31",
+      "km": 15,
+      "bateriaUsada": 21.429,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-09-20T10:02",
+      "km": 6,
+      "bateriaUsada": 8.571,
+      "notas": "Ida y vuelta"
+    },
+    {
+      "fecha": "2026-09-22T08:11",
+      "km": 11,
+      "bateriaUsada": 15.714,
+      "notas": "Centro"
+    },
+    {
+      "fecha": "2026-09-25T11:19",
+      "km": 13,
+      "bateriaUsada": 18.571,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-09-27T15:44",
+      "km": 7,
+      "bateriaUsada": 10.0,
+      "notas": "Mandados"
+    },
+    {
+      "fecha": "2026-09-28T21:24",
+      "km": 7,
+      "bateriaUsada": 10.0,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-09-29T20:37",
+      "km": 25,
+      "bateriaUsada": 35.714,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-10-01T06:15",
+      "km": 5,
+      "bateriaUsada": 7.143,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-10-02T06:49",
+      "km": 12,
+      "bateriaUsada": 17.143,
+      "notas": "Centro"
+    },
+    {
+      "fecha": "2026-10-05T06:53",
+      "km": 10,
+      "bateriaUsada": 14.286,
+      "notas": "Mandados"
+    },
+    {
+      "fecha": "2026-10-06T09:15",
+      "km": 18,
+      "bateriaUsada": 25.714,
+      "notas": "Paseo"
+    },
+    {
+      "fecha": "2026-10-07T08:46",
+      "km": 25,
+      "bateriaUsada": 35.714,
+      "notas": "Paseo"
+    },
+    {
+      "fecha": "2026-10-09T10:51",
+      "km": 15,
+      "bateriaUsada": 21.429,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-10-11T13:21",
+      "km": 6,
+      "bateriaUsada": 8.571,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-10-12T16:30",
+      "km": 16,
+      "bateriaUsada": 22.857,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-10-15T19:11",
+      "km": 8,
+      "bateriaUsada": 11.429,
+      "notas": "Ida y vuelta"
+    },
+    {
+      "fecha": "2026-10-18T22:21",
+      "km": 18,
+      "bateriaUsada": 25.714,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-10-22T06:01",
+      "km": 21,
+      "bateriaUsada": 30.0,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-10-23T10:48",
+      "km": 21,
+      "bateriaUsada": 30.0,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-10-26T16:10",
+      "km": 3,
+      "bateriaUsada": 4.286,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-10-28T21:26",
+      "km": 10,
+      "bateriaUsada": 14.286,
+      "notas": "Centro"
+    },
+    {
+      "fecha": "2026-10-31T06:49",
+      "km": 8,
+      "bateriaUsada": 11.429,
+      "notas": "Trabajo"
+    },
+    {
+      "fecha": "2026-11-01T08:19",
+      "km": 10,
+      "bateriaUsada": 14.286,
+      "notas": "Centro"
+    },
+    {
+      "fecha": "2026-11-02T13:58",
+      "km": 3,
+      "bateriaUsada": 4.286,
+      "notas": "Paseo"
+    },
+    {
+      "fecha": "2026-11-04T13:40",
+      "km": 12,
+      "bateriaUsada": 17.143,
+      "notas": "Mandados"
+    },
+    {
+      "fecha": "2026-11-05T18:51",
+      "km": 11,
+      "bateriaUsada": 15.714,
+      "notas": "Centro"
+    },
+    {
+      "fecha": "2026-11-06T22:20",
+      "km": 7,
+      "bateriaUsada": 10.0,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-11-07T22:28",
+      "km": 3,
+      "bateriaUsada": 4.286,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-11-11T06:09",
+      "km": 15,
+      "bateriaUsada": 21.429,
+      "notas": "Paseo"
+    },
+    {
+      "fecha": "2026-11-13T06:44",
+      "km": 16,
+      "bateriaUsada": 22.857,
+      "notas": ""
+    },
+    {
+      "fecha": "2026-11-14T06:30",
+      "km": 12,
+      "bateriaUsada": 17.143,
+      "notas": ""
+    }
+  ],
+  "bateriaActual": 62.5,
+  "odometroTotal": 624.0
+}
