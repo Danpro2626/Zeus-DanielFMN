@@ -1,0 +1,1172 @@
+{
+ "especificaciones": {
+  "capacidadBateria": 1200,
+  "autonomiaMaxima": 70,
+  "pesoTotal": 126.69,
+  "presionNeumaticos": "35 PSI",
+  "bateriaMinima": 20,
+  "bateriaAdvertencia": 30
+ },
+ "recorridos": [
+  {
+   "fecha": "2025-11-18T14:11",
+   "km": 17,
+   "bateriaUsada": 24.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-11-18T14:11",
+   "km": 17,
+   "bateriaUsada": 24.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-11-18T14:11",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-11-18T14:11",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-11-19T10:19",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-04T20:08",
+   "km": 44,
+   "bateriaUsada": 62.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-04T20:09",
+   "km": 40,
+   "bateriaUsada": 57.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-04T20:10",
+   "km": 4,
+   "bateriaUsada": 5.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-05T19:20",
+   "km": 2,
+   "bateriaUsada": 2.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-08T18:07",
+   "km": 7,
+   "bateriaUsada": 10,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-10T19:53",
+   "km": 15,
+   "bateriaUsada": 21.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-13T16:44",
+   "km": 5,
+   "bateriaUsada": 7.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-16T01:20",
+   "km": 13,
+   "bateriaUsada": 18.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-19T14:38",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-20T01:26",
+   "km": 5,
+   "bateriaUsada": 7.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-22T14:42",
+   "km": 15,
+   "bateriaUsada": 21.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-23T21:08",
+   "km": 21,
+   "bateriaUsada": 30,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-25T15:27",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-26T14:42",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-27T19:17",
+   "km": 5,
+   "bateriaUsada": 7.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2025-12-28T16:19",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-01-03T08:21",
+   "km": 15,
+   "bateriaUsada": 21.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-01-05T10:13",
+   "km": 12,
+   "bateriaUsada": 17.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-01-05T16:12",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-01-06T08:22",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-01-24T07:30",
+   "km": 21,
+   "bateriaUsada": 30,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-01-24T07:31",
+   "km": 45,
+   "bateriaUsada": 64.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-01-26T16:04",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-01-31T14:40",
+   "km": 22,
+   "bateriaUsada": 31.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-02T08:20",
+   "km": 9,
+   "bateriaUsada": 12.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-04T22:58",
+   "km": 28,
+   "bateriaUsada": 40,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-04T22:59",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-06T09:59",
+   "km": 9,
+   "bateriaUsada": 12.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-11T00:19",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-11T00:23",
+   "km": 12,
+   "bateriaUsada": 17.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-11T00:23",
+   "km": 15,
+   "bateriaUsada": 21.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-11T00:23",
+   "km": 7,
+   "bateriaUsada": 10,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-11T01:01",
+   "km": 9,
+   "bateriaUsada": 12.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-11T14:12",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-11T22:26",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-13T08:14",
+   "km": 19,
+   "bateriaUsada": 27.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-14T17:56",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-19T20:13",
+   "km": 9,
+   "bateriaUsada": 12.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-19T20:49",
+   "km": 16,
+   "bateriaUsada": 22.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-19T20:49",
+   "km": 9,
+   "bateriaUsada": 12.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-19T20:49",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-20T14:29",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-20T21:28",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-23T08:47",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-24T21:31",
+   "km": 28,
+   "bateriaUsada": 40,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-25T22:20",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-02-26T20:14",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-02T08:22",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-02T23:52",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-03T08:09",
+   "km": 2,
+   "bateriaUsada": 2.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-03T20:34",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-05T11:31",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-05T20:38",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-08T21:56",
+   "km": 33,
+   "bateriaUsada": 47.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-09T22:54",
+   "km": 11,
+   "bateriaUsada": 15.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-10T20:14",
+   "km": 16,
+   "bateriaUsada": 22.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-12T21:25",
+   "km": 16,
+   "bateriaUsada": 22.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-14T00:49",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-14T08:12",
+   "km": 1,
+   "bateriaUsada": 1.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-14T08:12",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-14T15:02",
+   "km": 6,
+   "bateriaUsada": 8.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-17T11:29",
+   "km": 28,
+   "bateriaUsada": 40,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-17T18:38",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-19T12:45",
+   "km": 13,
+   "bateriaUsada": 18.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-20T18:42",
+   "km": 15,
+   "bateriaUsada": 21.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-27T00:44",
+   "km": 16,
+   "bateriaUsada": 22.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-27T00:45",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-27T00:45",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-03-28T17:45",
+   "km": 6,
+   "bateriaUsada": 8.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-01T18:47",
+   "km": 6,
+   "bateriaUsada": 8.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-03T01:26",
+   "km": 4,
+   "bateriaUsada": 5.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-03T20:42",
+   "km": 4,
+   "bateriaUsada": 5.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-04T19:06",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-05T22:53",
+   "km": 22,
+   "bateriaUsada": 31.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-06T21:32",
+   "km": 12,
+   "bateriaUsada": 17.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-08T21:58",
+   "km": 25,
+   "bateriaUsada": 35.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-09T21:00",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-11T08:50",
+   "km": 30,
+   "bateriaUsada": 42.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-12T21:15",
+   "km": 2,
+   "bateriaUsada": 2.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-13T23:50",
+   "km": 15,
+   "bateriaUsada": 21.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-15T23:01",
+   "km": 20,
+   "bateriaUsada": 28.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-17T02:54",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-19T15:16",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-20T21:49",
+   "km": 14,
+   "bateriaUsada": 20,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-21T22:50",
+   "km": 21,
+   "bateriaUsada": 30,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-23T22:58",
+   "km": 16,
+   "bateriaUsada": 22.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-24T19:06",
+   "km": 1,
+   "bateriaUsada": 1.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-25T20:42",
+   "km": 16,
+   "bateriaUsada": 22.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-26T19:48",
+   "km": 6,
+   "bateriaUsada": 8.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-27T22:40",
+   "km": 9,
+   "bateriaUsada": 12.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-28T11:59",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-04-29T00:23",
+   "km": 9,
+   "bateriaUsada": 12.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-01T14:32",
+   "km": 25,
+   "bateriaUsada": 35.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-01T14:32",
+   "km": 1,
+   "bateriaUsada": 1.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-02T20:10",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-03T13:08",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-04T21:07",
+   "km": 4,
+   "bateriaUsada": 5.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-04T21:07",
+   "km": 12,
+   "bateriaUsada": 17.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-07T08:12",
+   "km": 20,
+   "bateriaUsada": 28.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-08T18:05",
+   "km": 14,
+   "bateriaUsada": 20,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-10T00:28",
+   "km": 2,
+   "bateriaUsada": 2.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-12T13:15",
+   "km": 19,
+   "bateriaUsada": 27.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-13T14:51",
+   "km": 12,
+   "bateriaUsada": 17.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-14T00:07",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-14T12:04",
+   "km": 3,
+   "bateriaUsada": 4.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-14T21:30",
+   "km": 5,
+   "bateriaUsada": 7.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-14T21:30",
+   "km": 4,
+   "bateriaUsada": 5.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-16T00:10",
+   "km": 2,
+   "bateriaUsada": 2.857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-17T00:56",
+   "km": 10,
+   "bateriaUsada": 14.286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-17T20:08",
+   "km": 6,
+   "bateriaUsada": 8.571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-19T10:38",
+   "km": 11,
+   "bateriaUsada": 15.714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-19T20:52",
+   "km": 8,
+   "bateriaUsada": 11.429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-20T22:08",
+   "km": 12,
+   "bateriaUsada": 17.143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-25T14:42",
+   "km": 21,
+   "bateriaUsada": 30,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-25T16:21",
+   "km": 7,
+   "bateriaUsada": 10,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-25T21:51",
+   "km": 10,
+   "bateriaUsada": 14.285714285714285,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-26T10:13",
+   "km": 8,
+   "bateriaUsada": 11.428571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-26T19:44",
+   "km": 8,
+   "bateriaUsada": 11.428571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-27T21:25",
+   "km": 15,
+   "bateriaUsada": 21.428571428571423,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-28T11:54",
+   "km": 18,
+   "bateriaUsada": 25.71428571428571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-28T12:40",
+   "km": 5,
+   "bateriaUsada": 7.142857142857142,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-28T18:52",
+   "km": 8,
+   "bateriaUsada": 11.428571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-05-28T19:39",
+   "km": 2,
+   "bateriaUsada": 2.857142857142857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-01T22:02",
+   "km": 19,
+   "bateriaUsada": 27.142857142857142,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-02T17:39",
+   "km": 21,
+   "bateriaUsada": 30,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-05T14:38",
+   "km": 31,
+   "bateriaUsada": 44.28571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-08T08:07",
+   "km": 3,
+   "bateriaUsada": 4.285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-10T14:00",
+   "km": 3,
+   "bateriaUsada": 4.285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-11T08:06",
+   "km": 29,
+   "bateriaUsada": 41.42857142857142,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-12T06:04",
+   "km": 29,
+   "bateriaUsada": 41.42857142857142,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-18T08:11",
+   "km": 41,
+   "bateriaUsada": 58.57142857142858,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-18T14:51",
+   "km": 3,
+   "bateriaUsada": 4.285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-19T08:10",
+   "km": 3,
+   "bateriaUsada": 4.285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-24T00:06",
+   "km": 25,
+   "bateriaUsada": 35.714285714285715,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-25T20:24",
+   "km": 34,
+   "bateriaUsada": 48.57142857142858,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-30T23:48",
+   "km": 3,
+   "bateriaUsada": 4.285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-06-30T23:48",
+   "km": 1,
+   "bateriaUsada": 1.4285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-02T00:44",
+   "km": 17,
+   "bateriaUsada": 24.28571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-03T08:22",
+   "km": 4,
+   "bateriaUsada": 5.714285714285714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-03T10:36",
+   "km": 26,
+   "bateriaUsada": 37.142857142857146,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-04T15:34",
+   "km": 28,
+   "bateriaUsada": 40,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-10T01:38",
+   "km": 35,
+   "bateriaUsada": 50,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-17T18:57",
+   "km": 28,
+   "bateriaUsada": 40,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-18T14:43",
+   "km": 1,
+   "bateriaUsada": 1.4285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-21T21:46",
+   "km": 41,
+   "bateriaUsada": 58.57142857142858,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-07-29T00:01",
+   "km": 23,
+   "bateriaUsada": 32.857142857142854,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-02T21:58",
+   "km": 31,
+   "bateriaUsada": 44.28571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-03T16:29",
+   "km": 15,
+   "bateriaUsada": 21.428571428571423,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-06T19:39",
+   "km": 31,
+   "bateriaUsada": 44.28571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-08T07:13",
+   "km": 10,
+   "bateriaUsada": 14.285714285714285,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-09T23:15",
+   "km": 3,
+   "bateriaUsada": 4.285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-11T20:25",
+   "km": 28,
+   "bateriaUsada": 40,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-12T20:09",
+   "km": 20,
+   "bateriaUsada": 28.57142857142857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-13T16:17",
+   "km": 7,
+   "bateriaUsada": 10,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-13T19:59",
+   "km": 8,
+   "bateriaUsada": 11.428571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-20T22:47",
+   "km": 38,
+   "bateriaUsada": 54.285714285714285,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-22T02:47",
+   "km": 12,
+   "bateriaUsada": 17.142857142857142,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-26T23:48",
+   "km": 30,
+   "bateriaUsada": 42.85714285714285,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-27T15:35",
+   "km": 8,
+   "bateriaUsada": 11.428571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-08-27T19:45",
+   "km": 8,
+   "bateriaUsada": 11.428571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-04T00:42",
+   "km": 55,
+   "bateriaUsada": 78.57142857142857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-04T00:43",
+   "km": 30,
+   "bateriaUsada": 42.85714285714285,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-04T00:43",
+   "km": 1,
+   "bateriaUsada": 1.4285714285714286,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-12T02:21",
+   "km": 50,
+   "bateriaUsada": 71.42857142857143,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-12T02:22",
+   "km": 27,
+   "bateriaUsada": 38.57142857142857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-17T22:29",
+   "km": 35,
+   "bateriaUsada": 50,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-21T15:37",
+   "km": 44,
+   "bateriaUsada": 62.857142857142854,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-23T08:25",
+   "km": 4,
+   "bateriaUsada": 5.714285714285714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-25T10:06",
+   "km": 22,
+   "bateriaUsada": 31.428571428571427,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-28T16:04",
+   "km": 35,
+   "bateriaUsada": 50,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-29T17:41",
+   "km": 11,
+   "bateriaUsada": 15.714285714285714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-09-29T20:43",
+   "km": 8,
+   "bateriaUsada": 11.428571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-01T17:26",
+   "km": 27,
+   "bateriaUsada": 38.57142857142857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-01T17:27",
+   "km": 4,
+   "bateriaUsada": 5.714285714285714,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-02T16:04",
+   "km": 8,
+   "bateriaUsada": 11.428571428571429,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-02T16:04",
+   "km": 35,
+   "bateriaUsada": 50,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-05T15:33",
+   "km": 2,
+   "bateriaUsada": 2.857142857142857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-14T09:23",
+   "km": 29,
+   "bateriaUsada": 41.42857142857142,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-19T22:20",
+   "km": 39,
+   "bateriaUsada": 55.714285714285715,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-22T19:23",
+   "km": 48,
+   "bateriaUsada": 68.57142857142857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-25T19:39",
+   "km": 24,
+   "bateriaUsada": 34.285714285714285,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-10-26T15:45",
+   "km": 16,
+   "bateriaUsada": 22.857142857142858,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-11-05T01:04",
+   "km": 55,
+   "bateriaUsada": 78.57142857142857,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-11-05T01:04",
+   "km": 23,
+   "bateriaUsada": 32.857142857142854,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-11-14T00:34",
+   "km": 53,
+   "bateriaUsada": 75.71428571428571,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-11-16T19:35",
+   "km": 16,
+   "bateriaUsada": 22.857142857142858,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-11-19T15:55",
+   "km": 16,
+   "bateriaUsada": 22.857142857142858,
+   "notas": ""
+  },
+  {
+   "fecha": "2026-11-19T19:51",
+   "km": 21,
+   "bateriaUsada": 30,
+   "notas": ""
+  }
+ ],
+ "bateriaActual": 47.14285714285714,
+ "odometroTotal": 2910
+}
